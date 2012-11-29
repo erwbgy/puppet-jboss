@@ -21,7 +21,7 @@ Example hiera config:
         extra_jars:
           - mysql-connector-java-5.1.21.jar
         java_home: /usr/java/jdk1.6.0_37
-        version: 4.5.0
+        version: 7.1.0.Final
     
     # HornetQ
     jboss::hornetq:
