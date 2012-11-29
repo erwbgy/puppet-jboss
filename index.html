@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Puppet-jboss : Puppet module to install and run JBoss 7" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Puppet-jboss</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/erwbgy/puppet-jboss">View on GitHub</a>
+
+          <h1 id="project_title">Puppet-jboss</h1>
+          <h2 id="project_tagline">Puppet module to install and run JBoss 7</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/erwbgy/puppet-jboss/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/erwbgy/puppet-jboss/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>puppet-jboss</h1>
+
+<p>Puppet module to install JBoss products and set them up to run as Runit services
+under one or more users.</p>
+
+<p>The recommended usage is to place the configuration is hiera and just:</p>
+
+<pre><code>include jboss
+</code></pre>
+
+<p>Example hiera config:</p>
+
+<pre><code># JBoss Application Server
+jboss::as:
+  jbossas1:
+    extra_jars:
+      - mysql-connector-java-5.1.21.jar
+    group: jboss
+    java_home: /usr/java/jdk1.7.0_07
+    version: 7.1.1.Final
+  jbossas2:
+    extra_jars:
+      - mysql-connector-java-5.1.21.jar
+    java_home: /usr/java/jdk1.6.0_37
+    version: 4.5.0
+
+# HornetQ
+jboss::hornetq:
+  hornetq1:
+    group: jboss
+    java_home: /usr/java/jdk1.7.0_07
+    version: 2.2.14
+</code></pre>
+
+<h2>Parameters</h2>
+
+<p>All product classes take following parameters:</p>
+
+<p><em>title</em>: The user the product runs as</p>
+
+<p><em>bind_address</em>: The IP address listen sockets are bound to. Default: $::fqdn</p>
+
+<p><em>extra_jars</em>: Additional jar files to be placed in the repository/component/lib directory</p>
+
+<p><em>group</em>: The user's primary group. Default: 'jboss',</p>
+
+<p><em>home</em>: The parent directory of user home directories Default: '/home',</p>
+
+<p><em>java_home</em>: The base directory of the JDK installation to be used. Default: '/usr/java/latest',</p>
+
+<p><em>java_opts</em>: Additional java command-line options to pass to the startup script</p>
+
+<p><em>version</em>: The version of the product to install (eg. 4.5.1). <strong>Required</strong>.</p>
+
+<h2>Product zip files</h2>
+
+<p>Place the product zip files (eg. jboss-as-7.1.1.Final.zip) under the 'files' file store.  For example if /etc/puppet/fileserver.conf has:</p>
+
+<pre><code>[files]
+path /var/lib/puppet/files
+</code></pre>
+
+<p>the put the zip files in /var/lib/puppet/files.</p>
+
+<h2>Notes</h2>
+
+<p>Currently:</p>
+
+<ul>
+<li>Only the JBoss Application Server has been tested</li>
+</ul><h2>Support</h2>
+
+<p>License: Apache License, Version 2.0</p>
+
+<p>GitHub URL: <a href="https://github.com/erwbgy/puppet-jboss">https://github.com/erwbgy/puppet-jboss</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Puppet-jboss maintained by <a href="https://github.com/erwbgy">erwbgy</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
