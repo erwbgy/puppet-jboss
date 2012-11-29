@@ -31,12 +31,13 @@ define jboss::as (
   }
 
   jboss::service{ "${user}-${product}":
-    product   => $product,
-    user      => $user,
-    group     => $group,
-    version   => $version,
-    java_home => $java_home,
-    java_opts => $java_opts,
-    home      => $home,
+    product      => $product,
+    user         => $user,
+    group        => $group,
+    version      => $version,
+    java_home    => $java_home,
+    java_opts    => $java_opts,
+    home         => $home,
+    bind_address => $bind_address,
   }
 }

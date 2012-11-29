@@ -1,11 +1,12 @@
 define jboss::service  (
-  $product   = undef,
-  $user      = undef,
-  $group     = undef,
-  $version   = undef,
-  $java_home = '/usr/java/latest',
-  $java_opts = '',
-  $home      = '/home'
+  $product      = undef,
+  $user         = undef,
+  $group        = undef,
+  $version      = undef,
+  $java_home    = '/usr/java/latest',
+  $java_opts    = '',
+  $home         = '/home',
+  $bind_address = $::fqdn,
 ) {
   runit::service { "${user}-${product}":
     service     => $product,
