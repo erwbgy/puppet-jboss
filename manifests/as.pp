@@ -7,6 +7,9 @@ define jboss::as (
   $java_home    = '/usr/java/latest',
   $java_opts    = '',
   $version      = undef,
+  $ojdbc6       = false,
+  $coherence    = false,
+  $sunrmi       = false,
 ) {
   $user        = $title
   $product     = 'jboss-as'
@@ -21,6 +24,30 @@ define jboss::as (
     user        => $user,
     group       => $group,
     basedir     => "${home}/${user}",
+  }
+
+  if $ojdbc6 {
+    jboss::modules::ojdbc6 { "${user}-${product}":
+      install_dir => "${home}/${user}/${product}-${version}",
+      user        => $user,
+      group       => $group,
+    }
+  }
+
+  if $coherence {
+    jboss::modules::coherence { "${user}-${product}":
+      install_dir => "${home}/${user}/${product}-${version}",
+      user        => $user,
+      group       => $group,
+    }
+  }
+
+  if $sunrmi {
+    jboss::modules::sunrmi { "${user}-${product}":
+      install_dir => "${home}/${user}/${product}-${version}",
+      user        => $user,
+      group       => $group,
+    }
   }
 
   $file_paths = prefix($extra_jars, "${product_dir}/")

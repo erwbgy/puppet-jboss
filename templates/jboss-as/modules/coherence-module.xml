@@ -1,0 +1,9 @@
+<module xmlns="urn:jboss:module:1.1" name="com.oracle.coherence">
+    <dependencies>
+        <module name="javax.api" export="true"/>
+        <module name="sun.jdk" export="true"/>
+    </dependencies>
+    <resources>
+        <resource-root path="coherence.jar"/>
+    </resources>
+</module>
