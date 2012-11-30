@@ -1,5 +1,6 @@
 define jboss::hornetq (
   $bind_address = $::fqdn,
+  $config_file  = 'standalone.xml',
   $extra_jars   = [],
   $group        = 'jboss',
   $home         = '/home',
@@ -39,5 +40,6 @@ define jboss::hornetq (
     java_opts    => $java_opts,
     home         => $home,
     bind_address => $bind_address,
+    config_file  => $config_file,
   }
 }

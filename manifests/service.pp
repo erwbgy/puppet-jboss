@@ -7,6 +7,7 @@ define jboss::service  (
   $java_opts    = '',
   $home         = '/home',
   $bind_address = $::fqdn,
+  $config_file  = 'standalone.xml',
 ) {
   runit::service { "${user}-${product}":
     service     => $product,
@@ -40,5 +41,16 @@ define jboss::service  (
     owner   => $user,
     target  => "${home}/${user}/${product}-${version}/repository/logs",
     require => File["${home}/${user}/logs/${product}"],
+  }
+  file { "${home}/${user}/${product}":
+    ensure  => link,
+    owner   => $user,
+    target  => "${home}/${user}/${product}-${version}",
+    require => File["${home}/${user}/${product}-${version}"],
+  }
+  file { "${home}/${user}/configuration":
+    ensure  => directory,
+    owner   => $user,
+    require => User[$user],
   }
 }

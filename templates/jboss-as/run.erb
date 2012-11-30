@@ -18,5 +18,5 @@ unset LAUNCH_JBOSS_IN_BACKGROUND
 
 exec $JBOSS_HOME/bin/standalone.sh \
   --properties=$HOME/configuration/jboss.properties \
-  -b <%= bind_address %> \
-  --server-config=standalone-full-ha.xml 
+  -b <%= @bind_address %> \
+  --server-config=<%= @config_file %>
