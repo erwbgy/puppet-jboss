@@ -9,7 +9,7 @@ define jboss::coherence (
     command => "/bin/mkdir -p ${dir}",
     require => File[$install_dir],
   }
-  file { "${dir}":
+  file { $dir:
     ensure  => directory,
     owner   => $user,
     group   => $group,
