@@ -15,7 +15,8 @@ class jboss::config {
       'set net.ipv4.tcp_wmem 4096 65536 16777216',
     ],
   }
-  limits::set { '@jboss':
+  limits::set { 'jboss-nofile':
+    domain => '@jboss',
     item   => 'nofile',
     soft   => '4096',
     hard   => '65535'

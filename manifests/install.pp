@@ -24,22 +24,28 @@ define jboss::install (
     ensure  => present,
     path    => "/root/jboss/${zipfile}",
     mode    => '0444',
-    source  => "puppet:///files/${zipfile}",
+    source  => "puppet:///files/jboss/${zipfile}",
     require => File['/root/jboss'],
   }
-  exec { "jboss-unpack-${version}":
-    cwd     => $basedir,
-    command => "/usr/bin/unzip '/root/jboss/${zipfile}'",
-    creates => "${basedir}/${subdir}",
-    notify  => Exec["jboss-fix-ownership-${version}"],
-    require => File["jboss-zipfile-${version}"],
+  if ! defined(File["${basedir}/product"]) {
+    file { "${basedir}/product":
+      ensure => directory,
+      mode   => '0750',
+    }
   }
-  file { "${basedir}/${subdir}":
+  exec { "jboss-unpack-${version}":
+    cwd     => "${basedir}/product",
+    command => "/usr/bin/unzip '/root/jboss/${zipfile}'",
+    creates => "${basedir}/product/${subdir}",
+    notify  => Exec["jboss-fix-ownership-${version}"],
+    require => File["jboss-zipfile-${version}", "${basedir}/product"],
+  }
+  file { "${basedir}/product/${subdir}":
     ensure  => directory,
     require => Exec["jboss-unpack-${version}"],
   }
   exec { "jboss-fix-ownership-${version}":
-    command     => "/bin/chown -R ${user}:${group} ${basedir}/${subdir}",
+    command     => "/bin/chown -R ${user}:${group} ${basedir}/product/${subdir}",
     refreshonly => true,
   }
 }

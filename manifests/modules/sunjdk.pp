@@ -1,4 +1,4 @@
-define jboss::sunrmi (
+define jboss::modules::sunjdk (
   $install_dir,
   $user,
   $group,
@@ -22,6 +22,7 @@ define jboss::sunrmi (
   $module = 'sunjdk'
   exec { "mkdir-${module}-${version}":
     command => "/bin/mkdir -p ${dir}",
+    creates => $dir,
     require => File[$install_dir],
   }
   file { $dir:

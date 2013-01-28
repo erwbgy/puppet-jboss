@@ -1,4 +1,4 @@
-define jboss::ojdbc6 (
+define jboss::modules::ojdbc6 (
   $install_dir,
   $user,
   $group,
@@ -7,6 +7,7 @@ define jboss::ojdbc6 (
   $dir    = "${install_dir}/modules/com/oracle/ojdbc6/main"
   exec { "mkdir-${module}-${version}":
     command => "/bin/mkdir -p ${dir}",
+    creates => $dir,
     require => File[$install_dir],
   }
   file { $dir:

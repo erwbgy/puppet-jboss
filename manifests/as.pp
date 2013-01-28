@@ -1,34 +1,39 @@
 define jboss::as (
+  $version,
+  $basedir      = '/opt/jboss',
   $bind_address = $::fqdn,
   $config_file  = 'standalone.xml',
   $extra_jars   = [],
   $group        = 'jboss',
-  $home         = '/home',
   $java_home    = '/usr/java/latest',
   $java_opts    = '',
-  $version      = undef,
+  $logdir       = '/var/log/jboss',
   $ojdbc6       = false,
   $coherence    = false,
-  $sunrmi       = false,
+  $sunjdk       = false,
 ) {
   $user        = $title
   $product     = 'jboss-as'
-  $product_dir = "${home}/${user}/${product}-${version}"
+  $product_dir = "${basedir}/product/${product}-${version}"
 
-  if ! defined(File["/etc/runit/${user}"]) {
-    runit::user { $user: group => $group }
+  include runit
+  if ! defined(File["${basedir}/runit/${user}"]) {
+    runit::user { $user:
+      basedir => $basedir,
+      group   => $group,
+    }
   }
 
   jboss::install { "${user}-${product}":
     version     => "${product}-${version}",
     user        => $user,
     group       => $group,
-    basedir     => "${home}/${user}",
+    basedir     => $basedir,
   }
 
   if $ojdbc6 {
     jboss::modules::ojdbc6 { "${user}-${product}":
-      install_dir => "${home}/${user}/${product}-${version}",
+      install_dir => $product_dir,
       user        => $user,
       group       => $group,
     }
@@ -36,15 +41,15 @@ define jboss::as (
 
   if $coherence {
     jboss::modules::coherence { "${user}-${product}":
-      install_dir => "${home}/${user}/${product}-${version}",
+      install_dir => $product_dir,
       user        => $user,
       group       => $group,
     }
   }
 
-  if $sunrmi {
-    jboss::modules::sunrmi { "${user}-${product}":
-      install_dir => "${home}/${user}/${product}-${version}",
+  if $sunjdk {
+    jboss::modules::sunjdk { "${user}-${product}":
+      install_dir => $product_dir,
       user        => $user,
       group       => $group,
     }
@@ -59,13 +64,14 @@ define jboss::as (
   }
 
   jboss::service{ "${user}-${product}":
+    basedir      => $basedir,
+    logdir       => $logdir,
     product      => $product,
     user         => $user,
     group        => $group,
     version      => $version,
     java_home    => $java_home,
     java_opts    => $java_opts,
-    home         => $home,
     bind_address => $bind_address,
     config_file  => $config_file,
   }

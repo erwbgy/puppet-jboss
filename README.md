@@ -12,41 +12,41 @@ Example hiera config:
     # JBoss Application Server
     jboss::as:
       jbossas1:
-        extra_jars:
-          - mysql-connector-java-5.1.21.jar
-        group: jboss
-        java_home: /usr/java/jdk1.7.0_07
-        version: 7.1.1.Final
-      jbossas2:
-        extra_jars:
-          - mysql-connector-java-5.1.21.jar
-        java_home: /usr/java/jdk1.6.0_37
-        version: 7.1.0.Final
-    
-    # HornetQ
-    jboss::hornetq:
-      hornetq1:
-        group: jboss
-        java_home: /usr/java/jdk1.7.0_07
-        version: 2.2.14
+        basedir:      '/apps/jbossas1'
+        bind_address: %{ipaddress_eth0}
+        group:        'jboss'
+        java_home:    '/usr/java/jdk1.7.0_09'
+        java_opts:    "-Xms1536m -Xmx1536m -XX:MaxPermSize=512m -Djboss.bind.address.management=%{ipaddress_eth0} -Djava.net.preferIPv4Stack=true"
+        logdir:       '/apps/jbossas1/logs'
+        version:      '7.1.1.Final'
 
-## Parameters
+## jboss::as parameters
 
 All product classes take following parameters:
 
 *title*: The user the product runs as
 
+*basedir*: The base installation directory. Default: '/opt/jboss'
+
 *bind_address*: The IP address listen sockets are bound to. Default: $::fqdn
 
-*extra_jars*: Additional jar files to be placed in the repository/component/lib directory
+*config_file*: The main server configuration file. Default: 'standalone.xml
 
-*group*: The user's primary group. Default: 'jboss',
+*extra_jars*: Additional jar files to be placed in the repository/component/lib directory. Default: []
 
-*home*: The parent directory of user home directories Default: '/home',
+*group*: The user's primary group. Default: 'jboss'
 
-*java_home*: The base directory of the JDK installation to be used. Default: '/usr/java/latest',
+*java_home*: The base directory of the JDK installation to be used. Default:
+'/usr/java/latest'
 
-*java_opts*: Additional java command-line options to pass to the startup script
+*java_opts*: Additional java command-line options to pass to the startup
+script. Default: ''
+
+*logdir*: The base log directory. Default: '/var/logs/jboss'
+
+*ojdbc6*: Install the Oracle JDBC driver and module configuration
+*coherence*: Install the Coherence driver and module configuration
+*sunjdk*: Install the Sun JDK module configuration
 
 *version*: The version of the product to install (eg. 4.5.1). **Required**.
 

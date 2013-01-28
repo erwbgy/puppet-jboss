@@ -6,7 +6,7 @@ exec 2>&1
 echo "<%= @product %> start"
 
 # Set environment variables
-export JBOSS_HOME=$HOME/<%= @product %>-<%= @version %>
+export JBOSS_HOME=<%= @product_dir %>
 export JAVA_HOME=<%= @java_home %>
 export JAVA_OPTS="<%= @java_opts %>"
 
@@ -17,6 +17,6 @@ export JAVA_OPTS="<%= @java_opts %>"
 unset LAUNCH_JBOSS_IN_BACKGROUND
 
 exec $JBOSS_HOME/bin/standalone.sh \
-  --properties=$HOME/configuration/jboss.properties \
+  --properties=<%= @basedir %>/sb-apps/configuration/jboss.properties \
   -b <%= @bind_address %> \
   --server-config=<%= @config_file %>

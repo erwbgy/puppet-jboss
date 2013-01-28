@@ -1,4 +1,4 @@
-define jboss::coherence (
+define jboss::modules::coherence (
   $install_dir,
   $user,
   $group,
@@ -7,6 +7,7 @@ define jboss::coherence (
   $dir    = "${install_dir}/modules/com/oracle/coherence/main"
   exec { "mkdir-${module}-${version}":
     command => "/bin/mkdir -p ${dir}",
+    creates => $dir,
     require => File[$install_dir],
   }
   file { $dir:
